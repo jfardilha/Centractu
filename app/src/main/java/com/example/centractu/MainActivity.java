@@ -1,8 +1,11 @@
 package com.example.centractu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +17,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,11 +35,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray sources = response.getJSONArray("sources");
+                            ArrayList<String> source_list = new ArrayList<String>();
                             for (int i = 0; i<sources.length(); i++){
                                 JSONObject source1 = sources.getJSONObject(i);
                                 Log.d("json_test", source1.get("id").toString());
-                            }
+//
+//                              A enlever après
+//
 
+                            }
+                            Intent main_page = new Intent(MainActivity.this, Main2Activity.class);
+                            startActivity(main_page);
 
 
                         } catch (JSONException e) {
@@ -45,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("json_test", "tout ne s'est pas passé comme prévu");
+                TextView txt = findViewById(R.id.text);
+                txt.setText("Something went wrong   ");
             }
         });
         queue.add(requete);
+
     }
 }
