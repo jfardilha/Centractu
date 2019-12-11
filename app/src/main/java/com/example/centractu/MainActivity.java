@@ -39,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i<sources.length(); i++){
                                 JSONObject source1 = sources.getJSONObject(i);
                                 Log.d("json_test", source1.get("id").toString());
+                                source_list.add(source1.get("id").toString());
 //
 //                              A enlever après
 //
 
                             }
                             Intent main_page = new Intent(MainActivity.this, Main2Activity.class);
+                            main_page.putExtra("source_list",source_list);
                             startActivity(main_page);
 
 
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.d("json_test", "tout ne s'est pas passé comme prévu");
                 TextView txt = findViewById(R.id.text);
-                txt.setText("Something went wrong   ");
+                txt.setText("Something went wrong !");
             }
         });
         queue.add(requete);
