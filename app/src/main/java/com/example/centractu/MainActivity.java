@@ -1,10 +1,9 @@
 package com.example.centractu;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,25 +27,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RequestQueue queue = Volley.newRequestQueue(this);
         String url_source = "https://newsapi.org/v2/sources?apiKey=d31f5fa5f03443dd8a1b9e3fde92ec34&language=fr";
+        final ArrayList<String> source_list = new ArrayList<String>();
+        final TextView txt = findViewById(R.id.text);
+        String url_source1;
         JsonObjectRequest requete = new JsonObjectRequest(Request.Method.GET, url_source, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray sources = response.getJSONArray("sources");
-                            ArrayList<String> source_list = new ArrayList<String>();
                             for (int i = 0; i<sources.length(); i++){
                                 JSONObject source1 = sources.getJSONObject(i);
-                                Log.d("json_test", source1.get("id").toString());
                                 source_list.add(source1.get("id").toString());
-//
+                                Log.d("json_test", source1.get("id").toString());
 //                              A enlever après
-//
-
                             }
-                            Intent main_page = new Intent(MainActivity.this, Main2Activity.class);
-                            main_page.putExtra("source_list",source_list);
-                            startActivity(main_page);
 
 
                         } catch (JSONException e) {
@@ -59,11 +53,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("json_test", "tout ne s'est pas passé comme prévu");
-                TextView txt = findViewById(R.id.text);
                 txt.setText("Something went wrong !");
             }
         });
         queue.add(requete);
+
+        url_source1 = "https://newsapi.org/v2/everything?" +
+                "apiKey=d31f5fa5f03443dd8a1b9e3fde92ec34&language=fr&sources=lequipe";
+//        pas opti : à changer
+        JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url_source1, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Intent main_page = new Intent(MainActivity.this, Main2Activity.class);
+                        main_page.putExtra("source_list",source_list);
+                        main_page.putExtra("jsonobject", response.toString());
+                        startActivity(main_page);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                txt.setText("La source ne peut être atteinte");
+            }
+        });
+        queue.add(request2);
 
     }
 }
