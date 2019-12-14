@@ -1,8 +1,12 @@
 package com.example.centractu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,7 +27,7 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        ListView liste_article = findViewById(R.id.listview);
+        final ListView liste_article = findViewById(R.id.listview);
         ArrayList<String> source_list = getIntent().getStringArrayListExtra("source_list");
 //        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,
 //                source_list);
@@ -44,6 +48,15 @@ public class Main2Activity extends AppCompatActivity {
             e.printStackTrace();
         }
 //        pour vérifier le passage de l'objet json
+
+        liste_article.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Main2Activity.this, WebviewActivity.class);
+                intent.putExtra("url", mesArticles.get(position).getUrl());
+                startActivity(intent);
+            }
+        });
     }
     private void remplir_liste_article() throws JSONException {
         mesArticles.clear();
