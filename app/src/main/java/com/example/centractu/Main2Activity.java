@@ -89,7 +89,6 @@ public class Main2Activity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position>0){
                     String source_id = source_list.get(position);
-                    Log.d("json_ref", source_id);
                     raffraichir_page(source_id);
 
                     String name = source_names.get(position);
@@ -115,7 +114,6 @@ public class Main2Activity extends AppCompatActivity {
 
     private void raffraichir_page(String source){
         RequestQueue queue = Volley.newRequestQueue(this);
-        Log.d("json_ref", "ici");
         String url_source1 = "https://newsapi.org/v2/everything?" +
                 "apiKey=35bf446307124bdc80419062b1a6be02&language=fr&sources="+source;
 //        manque le nom de la source
@@ -123,10 +121,8 @@ public class Main2Activity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("json_ref","requete");
                         try {
                             articles = response.getJSONArray("articles");
-                            Log.d("json_ref", articles.toString());
                             remplir_liste_article();
                             ArticleAdapter adapter =new ArticleAdapter(mesArticles, Main2Activity.this);
                             liste_article.setAdapter(adapter);

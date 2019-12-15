@@ -69,12 +69,12 @@ public class ArticleAdapter extends BaseAdapter {
         holder.titre.setText(article.getTitre());
         holder.description.setText(article.getDescription());
         ImageView image = convertView.findViewById(R.id.imageView);
-        if (article.getUrl_image() != null){
+        if (article.getUrl_image() != "null"){
             Picasso.get().load(article.getUrl_image()).into(image);
         }
-//        else{
-//            image.setImageResource(R.drawable.logo_centractu);
-//        }
+        else{
+            image.setImageResource(R.drawable.logo_centractu);
+        }
 
         return convertView;
     }
