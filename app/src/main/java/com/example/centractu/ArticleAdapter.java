@@ -50,13 +50,13 @@ public class ArticleAdapter extends BaseAdapter {
         if (convertView == null) {
             Log.v("test", "convertView is null");
             holder = new ViewHolder();
-//            if (position % 2 == 0){
-//                convertView = inflater.inflate(R.layout.livre_item, null);
-//            }
-//            else{
-//                convertView = inflater.inflate(R.layout.livre_item_2, null);
-//            }
-            convertView = inflater.inflate(R.layout.article1, null);
+            if (position % 2 == 0){
+                convertView = inflater.inflate(R.layout.article1, null);
+            }
+            else{
+                convertView = inflater.inflate(R.layout.article2, null);
+            }
+
             holder.titre = (TextView) convertView.findViewById(R.id.textView);
             holder.description = (TextView) convertView.findViewById(R.id.textView3);
 

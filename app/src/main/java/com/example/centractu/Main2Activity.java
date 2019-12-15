@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +23,7 @@ public class Main2Activity extends AppCompatActivity {
     List<Article> mesArticles = new ArrayList<Article>();
     JSONArray articles;
     List<String> urls = new ArrayList<String>();
+    TextView source_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class Main2Activity extends AppCompatActivity {
             JSONObject source1 = new JSONObject(getIntent().getStringExtra("jsonobject"));
             articles = source1.getJSONArray("articles");
             JSONObject article1 = articles.getJSONObject(0);
+//            JSONObject source = article1.getJSONObject("source");
+//            String name = source.getString("name");
+//            source_title = findViewById(R.id.textView3);
+//            source_title.setText(name);
             Log.d("json", article1.get("title").toString());
             this.remplir_liste_article();
 
