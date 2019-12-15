@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -21,9 +20,9 @@ import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
 
-    List<Article> mesArticles = new ArrayList<Article>();
+    List<Article> mesArticles = new ArrayList<>();
     JSONArray articles;
-    List<String> urls = new ArrayList<String>();
+    List<String> urls = new ArrayList<>();
     TextView source_title;
     Spinner spinner;
 
@@ -34,11 +33,15 @@ public class Main2Activity extends AppCompatActivity {
         final ListView liste_article = findViewById(R.id.listview);
         spinner = findViewById(R.id.spinner);
         ArrayList<String> source_list = getIntent().getStringArrayListExtra("source_list");
+
+//        menu déroulant avec les sources en français
         ArrayList<String> source_names = getIntent().getStringArrayListExtra("source_names");
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
                 source_names);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
+
+
 //        solution temporaire
         try {
             JSONObject source1 = new JSONObject(getIntent().getStringExtra("jsonobject"));
