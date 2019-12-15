@@ -1,6 +1,7 @@
 package com.example.centractu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,9 @@ public class ArticleAdapter extends BaseAdapter {
         if (article.getUrl_image() != null){
             Picasso.get().load(article.getUrl_image()).into(image);
         }
+//        else{
+//            image.setImageResource(R.drawable.logo_centractu);
+//        }
 
         return convertView;
     }

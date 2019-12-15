@@ -23,10 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String api = "35bf446307124bdc80419062b1a6be02";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url_source = "https://newsapi.org/v2/sources?apiKey=d31f5fa5f03443dd8a1b9e3fde92ec34&language=fr";
+        String url_source = "https://newsapi.org/v2/sources?apiKey=35bf446307124bdc80419062b1a6be02&language=fr";
         final ArrayList<String> source_list = new ArrayList<>();
         final ArrayList<String> source_names = new ArrayList<>();
         final TextView txt = findViewById(R.id.text);
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         queue.add(requete);
 
         url_source1 = "https://newsapi.org/v2/everything?" +
-                "apiKey=d31f5fa5f03443dd8a1b9e3fde92ec34&language=fr&sources=lequipe";
+                "apiKey=35bf446307124bdc80419062b1a6be02&language=fr&sources=lequipe";
 //        pas opti : à changer
         JsonObjectRequest request2 = new JsonObjectRequest(Request.Method.GET, url_source1, null,
                 new Response.Listener<JSONObject>() {
