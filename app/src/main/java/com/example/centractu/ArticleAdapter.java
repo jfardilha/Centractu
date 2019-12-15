@@ -1,7 +1,6 @@
 package com.example.centractu;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +14,15 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class ArticleAdapter extends BaseAdapter {
-    List<Article> liste_articles;
-    LayoutInflater inflater;
+    private List<Article> liste_articles;
+    private LayoutInflater inflater;
 
-    public ArticleAdapter(List<Article> liste_articles, Context context) {
+    ArticleAdapter(List<Article> liste_articles, Context context) {
         this.liste_articles = liste_articles;
         inflater = LayoutInflater.from(context);
     }
 
     private class ViewHolder{
-        ImageView img;
         TextView titre;
         TextView description;
 
@@ -57,8 +55,8 @@ public class ArticleAdapter extends BaseAdapter {
                 convertView = inflater.inflate(R.layout.article2, null);
             }
 
-            holder.titre = (TextView) convertView.findViewById(R.id.textView);
-            holder.description = (TextView) convertView.findViewById(R.id.textView3);
+            holder.titre = convertView.findViewById(R.id.textView);
+            holder.description = convertView.findViewById(R.id.textView3);
 
             convertView.setTag(holder);
         } else {
@@ -72,9 +70,7 @@ public class ArticleAdapter extends BaseAdapter {
         if (article.getUrl_image() != "null"){
             Picasso.get().load(article.getUrl_image()).into(image);
         }
-        else{
-            image.setImageResource(R.drawable.logo_centractu);
-        }
+        else image.setImageResource(R.drawable.logo_centractu);
 
         return convertView;
     }

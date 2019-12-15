@@ -30,7 +30,6 @@ public class Main2Activity extends AppCompatActivity {
 
     List<Article> mesArticles = new ArrayList<>();
     JSONArray articles;
-    List<String> urls = new ArrayList<>();
     TextView source_title;
     Spinner spinner;
     ArrayList<String> source_list;
@@ -159,7 +158,6 @@ public class Main2Activity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url_source1 = "https://newsapi.org/v2/everything?" +
                 "apiKey=35bf446307124bdc80419062b1a6be02&language=fr&sources="+source;
-//        manque le nom de la source
         JsonObjectRequest request3 = new JsonObjectRequest(Request.Method.GET, url_source1, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -170,7 +168,6 @@ public class Main2Activity extends AppCompatActivity {
                             ArticleAdapter adapter =new ArticleAdapter(mesArticles, Main2Activity.this);
                             liste_article.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

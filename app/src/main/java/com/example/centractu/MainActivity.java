@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String api = "35bf446307124bdc80419062b1a6be02";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final RequestQueue queue = Volley.newRequestQueue(this);
