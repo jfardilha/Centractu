@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         String api = "35bf446307124bdc80419062b1a6be02";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url_source = "https://newsapi.org/v2/sources?apiKey=35bf446307124bdc80419062b1a6be02&language=fr";
+        final RequestQueue queue = Volley.newRequestQueue(this);
+        final String url_source = "https://newsapi.org/v2/sources?apiKey=35bf446307124bdc80419062b1a6be02&language=fr";
         final ArrayList<String> source_list = new ArrayList<>();
         final ArrayList<String> source_names = new ArrayList<>();
         final TextView txt = findViewById(R.id.text);
@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("json_test", "tout ne s'est pas passé comme prévu");
-                txt.setText("Something went wrong !");
             }
         });
         queue.add(requete);
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txt.setText("La source ne peut être atteinte");
+                txt.setText("Something went wrong !");
             }
         });
         queue.add(request2);
