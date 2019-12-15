@@ -34,8 +34,9 @@ public class Main2Activity extends AppCompatActivity {
         final ListView liste_article = findViewById(R.id.listview);
         spinner = findViewById(R.id.spinner);
         ArrayList<String> source_list = getIntent().getStringArrayListExtra("source_list");
+        ArrayList<String> source_names = getIntent().getStringArrayListExtra("source_names");
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
-                source_list);
+                source_names);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 //        solution temporaire
@@ -44,9 +45,9 @@ public class Main2Activity extends AppCompatActivity {
             articles = source1.getJSONArray("articles");
             JSONObject article1 = articles.getJSONObject(0);
 //            JSONObject source = article1.getJSONObject("source");
-//            String name = source.getString("name");
-//            source_title = findViewById(R.id.textView3);
-//            source_title.setText(name);
+            String name = source_names.get(2);
+            source_title = findViewById(R.id.textView2);
+            source_title.setText(name);
             Log.d("json", article1.get("title").toString());
             this.remplir_liste_article();
 

@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RequestQueue queue = Volley.newRequestQueue(this);
         String url_source = "https://newsapi.org/v2/sources?apiKey=d31f5fa5f03443dd8a1b9e3fde92ec34&language=fr";
-        final ArrayList<String> source_list = new ArrayList<String>();
+        final ArrayList<String> source_list = new ArrayList<>();
+        final ArrayList<String> source_names = new ArrayList<>();
         final TextView txt = findViewById(R.id.text);
         String url_source1;
         JsonObjectRequest requete = new JsonObjectRequest(Request.Method.GET, url_source, null,
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i<sources.length(); i++){
                                 JSONObject source1 = sources.getJSONObject(i);
                                 source_list.add(source1.get("id").toString());
+                                source_names.add(source1.get("name").toString());
                                 Log.d("json_test", source1.get("id").toString());
 //                              A enlever après
                             }
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Intent main_page = new Intent(MainActivity.this, Main2Activity.class);
                         main_page.putExtra("source_list",source_list);
+                        main_page.putExtra("source_names", source_names);
                         main_page.putExtra("jsonobject", response.toString());
                         startActivity(main_page);
 
