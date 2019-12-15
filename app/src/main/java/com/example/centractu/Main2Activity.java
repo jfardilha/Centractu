@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -24,17 +25,19 @@ public class Main2Activity extends AppCompatActivity {
     JSONArray articles;
     List<String> urls = new ArrayList<String>();
     TextView source_title;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         final ListView liste_article = findViewById(R.id.listview);
+        spinner = findViewById(R.id.spinner);
         ArrayList<String> source_list = getIntent().getStringArrayListExtra("source_list");
-//        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,
-//                source_list);
-//        liste_article.setAdapter(arrayAdapter);
-
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
+                source_list);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
 //        solution temporaire
         try {
             JSONObject source1 = new JSONObject(getIntent().getStringExtra("jsonobject"));
