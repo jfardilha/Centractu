@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,8 +36,8 @@ public class Main2Activity extends AppCompatActivity {
     ArrayList<String> source_list;
     ArrayList<String> source_names;
     ListView liste_article;
-
-    @Override
+    String source_id;
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
@@ -62,6 +63,7 @@ public class Main2Activity extends AppCompatActivity {
             JSONObject article1 = articles.getJSONObject(0);
 //            JSONObject source = article1.getJSONObject("source");
             String name = source_names.get(3);
+            source_id = source_list.get(3);
             source_title = findViewById(R.id.textView2);
             source_title.setText(name);
             Log.d("json", article1.get("title").toString());
@@ -75,6 +77,7 @@ public class Main2Activity extends AppCompatActivity {
         }
 //        pour vérifier le passage de l'objet json
 
+
         liste_article.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -84,11 +87,14 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
+            Button btn = new Button(this);
+            btn.setText("Load more ...");
+            liste_article.addFooterView(btn);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position>0){
-                    String source_id = source_list.get(position);
+                    source_id = source_list.get(position);
                     raffraichir_page(source_id);
 
                     String name = source_names.get(position);
@@ -100,6 +106,43 @@ public class Main2Activity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+        });
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestQueue queue2 = Volley.newRequestQueue(Main2Activity.this);
+                String url = "https://newsapi.org/v2/everything?apiKey=d31f5fa5f03443dd8a1b9e3fde92ec34&language=fr&sources="
+                +source_id+"&page=2";
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    articles = response.getJSONArray("articles");
+                                    for (int i=0; i<articles.length(); i++) {
+                                        JSONObject article = articles.getJSONObject(i);
+                                        mesArticles.add(new Article(article.get("title").toString(),
+                                                article.get("description").toString(),
+                                                article.get("url").toString(),
+                                                article.get("urlToImage").toString()));
+                                        ArticleAdapter adapter =new ArticleAdapter(mesArticles,
+                                                Main2Activity.this);
+                                        liste_article.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                queue2.add(request);
+            }
+
         });
     }
     private void remplir_liste_article() throws JSONException {
